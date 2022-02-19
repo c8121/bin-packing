@@ -99,36 +99,36 @@ public class Placement extends Box {
         this.remainder.add(new Placement(
                 this,
                 new Box(
-                        item.x() + item.xs() / 2 + (this.parent.xs() - item.xs()) / 2,
+                        item.x() + item.xs() / 2 + (this.xs() - item.xs()) / 2,
                         item.y(),
-                        this.parent.z(),
-                        this.parent.xs() - item.xs(),
+                        this.z(),
+                        this.xs() - item.xs(),
                         item.ys(),
-                        this.parent.zs()
+                        this.zs()
                 )
         ));
 
         this.remainder.add(new Placement(
                 this,
                 new Box(
-                        this.parent.x(),
-                        item.y() + item.ys() / 2 + (this.parent.ys() - item.ys()) / 2,
-                        this.parent.z(),
-                        this.parent.xs(),
-                        this.parent.ys() - item.ys(),
-                        this.parent.zs()
+                        this.x(),
+                        item.y() + item.ys() / 2 + (this.ys() - item.ys()) / 2,
+                        this.z(),
+                        this.xs(),
+                        this.ys() - item.ys(),
+                        this.zs()
                 )
         ));
 
         this.remainder.add(new Placement(
                 this,
                 new Box(
-                        item.x() + item.xs() / 2 + (this.parent.xs() - item.xs()) / 2,
-                        this.parent.y(),
-                        this.parent.z(),
-                        this.parent.xs() - item.xs(),
-                        this.parent.ys(),
-                        this.parent.zs()
+                        item.x() + item.xs() / 2 + (this.xs() - item.xs()) / 2,
+                        this.y(),
+                        this.z(),
+                        this.xs() - item.xs(),
+                        this.ys(),
+                        this.zs()
                 )
         ));
 
@@ -136,11 +136,11 @@ public class Placement extends Box {
                 this,
                 new Box(
                         item.x(),
-                        item.y() + item.ys() / 2 + (this.parent.ys() - item.ys()) / 2,
-                        this.parent.z(),
+                        item.y() + item.ys() / 2 + (this.ys() - item.ys()) / 2,
+                        this.z(),
                         item.xs(),
-                        this.parent.ys() - item.ys(),
-                        this.parent.zs()
+                        this.ys() - item.ys(),
+                        this.zs()
                 )
         ));
 
@@ -149,10 +149,10 @@ public class Placement extends Box {
                 new Box(
                         item.x(),
                         item.y(),
-                        this.parent.z() + item.zs() / 2,
+                        this.z() + item.zs() / 2,
                         item.xs(),
                         item.ys(),
-                        this.parent.zs() - item.zs()
+                        this.zs() - item.zs()
                 )
         ));
 
@@ -161,7 +161,7 @@ public class Placement extends Box {
     /**
      *
      */
-    public List<Placement> getRemainder() {
+    public List<Placement> getRemainders() {
         return List.copyOf(this.remainder);
     }
 }
