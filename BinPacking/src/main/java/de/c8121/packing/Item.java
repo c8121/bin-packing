@@ -12,8 +12,8 @@ public class Item extends Box {
         this.weight = weight;
     }
 
-    public Item(final int w, final int h, final int d, final int weight) {
-        super(w, h, d);
+    public Item(final int xs, final int ys, final int zs, final int weight) {
+        super(xs, ys, zs);
         this.weight = weight;
     }
 

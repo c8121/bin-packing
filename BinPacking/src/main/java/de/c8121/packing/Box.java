@@ -1,7 +1,7 @@
 package de.c8121.packing;
 
 /**
- *
+ * Position denotes center of Box.
  */
 public class Box implements Position, Dimension {
 
@@ -22,17 +22,11 @@ public class Box implements Position, Dimension {
      */
     public Box(final Position position, final Dimension dimension) {
 
-        if (position != null) {
-            this.x = position.x();
-            this.y = position.y();
-            this.z = position.z();
-        }
+        if (position != null)
+            this.move(position.x(), position.y(), position.z());
 
-        if (dimension != null) {
-            this.xs = dimension.xs();
-            this.ys = dimension.ys();
-            this.zs = dimension.zs();
-        }
+        if (dimension != null)
+            this.resize(dimension.xs(), dimension.ys(), dimension.zs());
     }
 
 
@@ -40,36 +34,23 @@ public class Box implements Position, Dimension {
      * Copy constructor
      */
     public Box(final Box box) {
-
-        this.x = box.x;
-        this.y = box.y;
-        this.z = box.z;
-
-        this.xs = box.xs;
-        this.ys = box.ys;
-        this.zs = box.zs;
+        this.move(box.x, box.y, box.z);
+        this.resize(box.xs, box.ys, box.zs);
     }
 
     /**
      * Creates a box with given size at given position
      */
-    public Box(final int x, final int y, final int z, final int w, final int h, final int d) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-
-        this.xs = w;
-        this.ys = h;
-        this.zs = d;
+    public Box(final int x, final int y, final int z, final int xs, final int ys, final int zs) {
+        this.move(x, y, z);
+        this.resize(xs, ys, zs);
     }
 
     /**
      * Creates a box with given size at position 0/0/0
      */
-    public Box(final int w, final int h, final int d) {
-        this.xs = w;
-        this.ys = h;
-        this.zs = d;
+    public Box(final int xs, final int ys, final int zs) {
+        this.resize(xs, ys, zs);
     }
 
     @Override
@@ -87,6 +68,16 @@ public class Box implements Position, Dimension {
         return this.zs;
     }
 
+    /**
+     *
+     */
+    public void resize(final int xs, final int ys, final int zs) {
+        this.xs = xs;
+        this.ys = ys;
+        this.zs = zs;
+    }
+
+
     @Override
     public int x() {
         return this.x;
@@ -100,5 +91,14 @@ public class Box implements Position, Dimension {
     @Override
     public int z() {
         return this.z;
+    }
+
+    /**
+     *
+     */
+    public void move(final int x, final int y, final int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }

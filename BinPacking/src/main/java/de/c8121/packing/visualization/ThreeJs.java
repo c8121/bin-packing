@@ -16,7 +16,7 @@ import java.util.Map;
 public class ThreeJs {
 
     private final List<Box> boxes = new ArrayList<>();
-    private final Map<Box,String> styles = new HashMap<>();
+    private final Map<Box, String> styles = new HashMap<>();
 
     /**
      *
@@ -83,32 +83,33 @@ public class ThreeJs {
                     .append(");\n");
 
             var style = this.styles.get(box);
-            if( style==null)
+            if (style == null)
                 style = "color: 0xffff00, wireframe: true";
 
             html.append("material = new THREE.MeshBasicMaterial({").append(style).append("});\n");
 
             html.append("cube = new THREE.Mesh(geometry, material);\n")
-                    .append("cube.position.x = ").append(box.x() + box.xs() / 2).append(";\n")
-                    .append("cube.position.y = ").append(box.y() + box.ys() / 2).append(";\n")
-                    .append("cube.position.z = ").append(box.z() + box.zs() / 2).append(";\n");
+                    .append("cube.position.x = ").append(box.x()).append(";\n")
+                    .append("cube.position.y = ").append(box.y()).append(";\n")
+                    .append("cube.position.z = ").append(box.z()).append(";\n");
 
             html.append("scene.add(cube)\n");
         }
 
         html
-                .append("camera.position.z = 5;\n");
+                .append("camera.position.x = 500;\n")
+                .append("camera.position.y = 500;\n")
+                .append("camera.position.z = 500;\n");
 
         html
                 .append("function animate() {\n")
                 .append("renderer.render( scene, camera );\n")
-                .append("}\n")
-                .append("animate();\n");
+                .append("}\n");
 
         html
                 .append("var controls = new THREE.OrbitControls( camera, renderer.domElement );\n")
                 .append("controls.addEventListener( 'change', animate );\n")
-        ;
+                .append("animate();\n");
 
         html
                 .append("</script>\n")

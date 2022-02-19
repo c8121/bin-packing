@@ -17,23 +17,45 @@ class PlacementTest {
 
         var vis = new ThreeJs();
 
+        var axis = new Item(900, 1, 1, 0);
+        vis.add(axis);
+        vis.setStyle(axis, "color: 0xff0000");
+
+        axis = new Item(1, 900, 1, 0);
+        vis.add(axis);
+        vis.setStyle(axis, "color: 0x00ff00");
+
+        axis = new Item(1, 1, 900, 0);
+        vis.add(axis);
+        vis.setStyle(axis, "color: 0x0000ff");
+
         var container = new Container(200, 200, 200, 100);
         vis.add(container);
 
         var placement = new Placement(container);
         //vis.add(placement);
 
-        var item = new Item(30, 30, 30, 10);
+        var item = new Item(50, 70, 90, 10);
         vis.add(item);
+        vis.setStyle(item, "color: 0xffff00, wireframe: false");
+
         placement.setItem(item);
 
         for (var remainder : placement.getRemainder().entrySet()) {
             var pos = remainder.getKey();
-            vis.add(remainder.getValue());
             switch (pos) {
-                case B, C -> vis.setStyle(remainder.getValue(), "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
-                case D, E -> vis.setStyle(remainder.getValue(), "color: 0xffff00, wireframe: true, opacity: 0.25, transparent: true");
-                case Z -> vis.setStyle(remainder.getValue(), "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
+                case B, C -> {
+                    vis.add(remainder.getValue());
+                    vis.setStyle(remainder.getValue(), "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
+                }
+                case D, E -> {
+                    vis.add(remainder.getValue());
+                    vis.setStyle(remainder.getValue(), "color: 0x00ff00, wireframe: false, opacity: 0.25, transparent: true");
+                }
+                case Z -> {
+                    vis.add(remainder.getValue());
+                    vis.setStyle(remainder.getValue(), "color: 0x0000ff, wireframe: false, opacity: 0.25, transparent: true");
+                }
             }
         }
 
