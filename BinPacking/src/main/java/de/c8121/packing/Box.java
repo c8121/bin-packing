@@ -1,5 +1,7 @@
 package de.c8121.packing;
 
+import java.util.Objects;
+
 /**
  * Position denotes center of Box.
  */
@@ -100,5 +102,60 @@ public class Box implements Position, Dimension {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    /**
+     *
+     */
+    public int xMin() {
+        return this.x - this.xs / 2;
+    }
+
+    /**
+     *
+     */
+    public int yMin() {
+        return this.y - this.ys / 2;
+    }
+
+    /**
+     *
+     */
+    public int zMin() {
+        return this.z - this.zs / 2;
+    }
+
+    /**
+     *
+     */
+    public int xMax() {
+        return this.x + this.xs / 2;
+    }
+
+    /**
+     *
+     */
+    public int yMax() {
+        return this.y + this.ys / 2;
+    }
+
+    /**
+     *
+     */
+    public int zMax() {
+        return this.z + this.zs / 2;
+    }
+
+
+    /**
+     *
+     */
+    public boolean intersects(final Box b) {
+        if (this.xMin() < b.xMax() && this.xMax() > b.xMin())
+            if (this.yMin() < b.yMax() && this.yMax() > b.yMin())
+                if (this.zMin() < b.zMax() && this.zMax() > b.zMin())
+                    return true;
+
+        return false;
     }
 }

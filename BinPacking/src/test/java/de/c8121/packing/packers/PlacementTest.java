@@ -35,17 +35,16 @@ class PlacementTest {
         this.vis.setStyle(item, "color: 0xffff00, wireframe: false");
 
         placement.setItem(item);
-        this.showRemainders(placement);
 
-
-        placement = placement.getRemainders().get(0);
-
-        item = new Item(50, 70, 90, 10);
+        item = new Item(90, 90, 90, 10);
         this.vis.add(item);
         this.vis.setStyle(item, "color: 0x00ff00, wireframe: false");
 
-        placement.setItem(item);
+        var nextPlacement = placement.findRemainder(item);
+        nextPlacement.setItem(item);
+
         this.showRemainders(placement);
+        this.showRemainders(nextPlacement);
 
         this.showAxis();
 
@@ -65,14 +64,14 @@ class PlacementTest {
             this.vis.add(remainder);
 
             num++;
-            if (num == 1)//if (num < 3)
+            if (num < 3)
                 this.vis.setStyle(remainder, "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
-            /*else if (num < 5)
+            else if (num < 5)
                 this.vis.setStyle(remainder, "color: 0x00ff00, wireframe: false, opacity: 0.25, transparent: true");
             else if (num < 7)
                 this.vis.setStyle(remainder, "color: 0x0000ff, wireframe: false, opacity: 0.25, transparent: true");
             else if (num == 9)
-                num = 0;*/
+                num = 0;
 
         }
     }
