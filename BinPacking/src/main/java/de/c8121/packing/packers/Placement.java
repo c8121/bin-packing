@@ -3,8 +3,8 @@ package de.c8121.packing.packers;
 import de.c8121.packing.Box;
 import de.c8121.packing.Item;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Remainders:
@@ -57,19 +57,10 @@ import java.util.Map;
  */
 public class Placement extends Box {
 
-    public static enum RemainderPosition {
-        A,
-        B,
-        C,
-        D,
-        E,
-        Z
-    }
-
     private final Box parent;
     private Item item;
 
-    private final Map<RemainderPosition, Placement> remainder = new HashMap<>();
+    private final List<Placement> remainder = new ArrayList<>();
 
     /**
      *
@@ -79,7 +70,8 @@ public class Placement extends Box {
         super(positionAndDimension);
         this.parent = parent;
 
-        this.remainder.put(RemainderPosition.A, this);
+        //No item added so far: Whole place remains
+        this.remainder.add(this);
     }
 
     /**
@@ -104,7 +96,7 @@ public class Placement extends Box {
 
         this.remainder.clear();
 
-        this.remainder.put(RemainderPosition.B, new Placement(
+        this.remainder.add(new Placement(
                 this,
                 new Box(
                         item.x() + item.xs() / 2 + (this.parent.xs() - item.xs()) / 2,
@@ -116,7 +108,7 @@ public class Placement extends Box {
                 )
         ));
 
-        this.remainder.put(RemainderPosition.C, new Placement(
+        this.remainder.add(new Placement(
                 this,
                 new Box(
                         this.parent.x(),
@@ -128,7 +120,7 @@ public class Placement extends Box {
                 )
         ));
 
-        this.remainder.put(RemainderPosition.D, new Placement(
+        this.remainder.add(new Placement(
                 this,
                 new Box(
                         item.x() + item.xs() / 2 + (this.parent.xs() - item.xs()) / 2,
@@ -140,7 +132,7 @@ public class Placement extends Box {
                 )
         ));
 
-        this.remainder.put(RemainderPosition.E, new Placement(
+        this.remainder.add(new Placement(
                 this,
                 new Box(
                         item.x(),
@@ -152,7 +144,7 @@ public class Placement extends Box {
                 )
         ));
 
-        this.remainder.put(RemainderPosition.Z, new Placement(
+        this.remainder.add(new Placement(
                 this,
                 new Box(
                         item.x(),
@@ -169,7 +161,7 @@ public class Placement extends Box {
     /**
      *
      */
-    public Map<RemainderPosition,Placement> getRemainder() {
-        return Map.copyOf(this.remainder);
+    public List<Placement> getRemainder() {
+        return List.copyOf(this.remainder);
     }
 }

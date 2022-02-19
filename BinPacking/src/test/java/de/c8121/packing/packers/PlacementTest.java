@@ -41,22 +41,21 @@ class PlacementTest {
 
         placement.setItem(item);
 
-        for (var remainder : placement.getRemainder().entrySet()) {
-            var pos = remainder.getKey();
-            switch (pos) {
-                case B, C -> {
-                    vis.add(remainder.getValue());
-                    vis.setStyle(remainder.getValue(), "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
-                }
-                case D, E -> {
-                    vis.add(remainder.getValue());
-                    vis.setStyle(remainder.getValue(), "color: 0x00ff00, wireframe: false, opacity: 0.25, transparent: true");
-                }
-                case Z -> {
-                    vis.add(remainder.getValue());
-                    vis.setStyle(remainder.getValue(), "color: 0x0000ff, wireframe: false, opacity: 0.25, transparent: true");
-                }
-            }
+        int num = 0;
+        for (var remainder : placement.getRemainder()) {
+
+            vis.add(remainder);
+
+            num++;
+            if (num < 3)
+                vis.setStyle(remainder, "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
+            else if (num < 5)
+                vis.setStyle(remainder, "color: 0x00ff00, wireframe: false, opacity: 0.25, transparent: true");
+            else if (num < 7)
+                vis.setStyle(remainder, "color: 0x0000ff, wireframe: false, opacity: 0.25, transparent: true");
+            else if (num == 9)
+                num = 0;
+
         }
 
         var file = new File(FileUtils.getTempDirectory(), PlacementTest.class.getSimpleName() + ".html");
