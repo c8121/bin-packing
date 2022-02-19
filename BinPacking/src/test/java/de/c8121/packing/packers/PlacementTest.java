@@ -10,58 +10,88 @@ import java.io.IOException;
 
 class PlacementTest {
 
+    private final ThreeJs vis = new ThreeJs();
+
     /**
      *
      */
     public static void main(String[] args) throws IOException {
+        new PlacementTest().test();
+    }
 
-        var vis = new ThreeJs();
-
-        var axis = new Item(900, 1, 1, 0);
-        vis.add(axis);
-        vis.setStyle(axis, "color: 0xff0000");
-
-        axis = new Item(1, 900, 1, 0);
-        vis.add(axis);
-        vis.setStyle(axis, "color: 0x00ff00");
-
-        axis = new Item(1, 1, 900, 0);
-        vis.add(axis);
-        vis.setStyle(axis, "color: 0x0000ff");
+    /**
+     *
+     */
+    public void test() throws IOException {
 
         var container = new Container(200, 200, 200, 100);
-        vis.add(container);
+        this.vis.add(container);
 
         var placement = new Placement(container);
-        //vis.add(placement);
+        //this.vis.add(placement);
 
         var item = new Item(50, 70, 90, 10);
-        vis.add(item);
-        vis.setStyle(item, "color: 0xffff00, wireframe: false");
+        this.vis.add(item);
+        this.vis.setStyle(item, "color: 0xffff00, wireframe: false");
 
         placement.setItem(item);
+        this.showRemainders(placement);
 
+
+        placement = placement.getRemainders().get(0);
+
+        item = new Item(50, 70, 90, 10);
+        this.vis.add(item);
+        this.vis.setStyle(item, "color: 0x00ff00, wireframe: false");
+
+        placement.setItem(item);
+        this.showRemainders(placement);
+
+        this.showAxis();
+
+        var file = new File(FileUtils.getTempDirectory(), this.getClass().getSimpleName() + ".html");
+        System.out.println("Writing to " + file);
+        this.vis.writeHtml(file);
+
+    }
+
+    /**
+     *
+     */
+    private void showRemainders(final Placement placement) {
         int num = 0;
-        for (var remainder : placement.getRemainder()) {
+        for (var remainder : placement.getRemainders()) {
 
-            vis.add(remainder);
+            this.vis.add(remainder);
 
             num++;
-            if (num < 3)
-                vis.setStyle(remainder, "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
-            else if (num < 5)
-                vis.setStyle(remainder, "color: 0x00ff00, wireframe: false, opacity: 0.25, transparent: true");
+            if (num == 1)//if (num < 3)
+                this.vis.setStyle(remainder, "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
+            /*else if (num < 5)
+                this.vis.setStyle(remainder, "color: 0x00ff00, wireframe: false, opacity: 0.25, transparent: true");
             else if (num < 7)
-                vis.setStyle(remainder, "color: 0x0000ff, wireframe: false, opacity: 0.25, transparent: true");
+                this.vis.setStyle(remainder, "color: 0x0000ff, wireframe: false, opacity: 0.25, transparent: true");
             else if (num == 9)
-                num = 0;
+                num = 0;*/
 
         }
+    }
 
-        var file = new File(FileUtils.getTempDirectory(), PlacementTest.class.getSimpleName() + ".html");
-        System.out.println("Writing to " + file);
-        vis.writeHtml(file);
+    /**
+     *
+     */
+    private void showAxis() {
+        var axis = new Item(900, 1, 1, 0);
+        this.vis.add(axis);
+        this.vis.setStyle(axis, "color: 0xff0000");
 
+        axis = new Item(1, 900, 1, 0);
+        this.vis.add(axis);
+        this.vis.setStyle(axis, "color: 0x00ff00");
+
+        axis = new Item(1, 1, 900, 0);
+        this.vis.add(axis);
+        this.vis.setStyle(axis, "color: 0x0000ff");
     }
 
 }
