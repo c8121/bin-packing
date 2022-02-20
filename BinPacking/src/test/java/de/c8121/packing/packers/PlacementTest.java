@@ -2,15 +2,12 @@ package de.c8121.packing.packers;
 
 import de.c8121.packing.Container;
 import de.c8121.packing.Item;
-import de.c8121.packing.visualization.ThreeJs;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
-class PlacementTest {
-
-    private final ThreeJs vis = new ThreeJs();
+class PlacementTest extends ThreeJsTestBase {
 
     /**
      *
@@ -43,7 +40,7 @@ class PlacementTest {
         var nextPlacement = placement.findRemainder(item);
         nextPlacement.setItem(item);
 
-        this.showRemainders(placement);
+        //this.showRemainders(placement);
         this.showRemainders(nextPlacement);
 
         this.showAxis();
@@ -53,44 +50,4 @@ class PlacementTest {
         this.vis.writeHtml(file);
 
     }
-
-    /**
-     *
-     */
-    private void showRemainders(final Placement placement) {
-        int num = 0;
-        for (var remainder : placement.getRemainders()) {
-
-            this.vis.add(remainder);
-
-            num++;
-            if (num < 3)
-                this.vis.setStyle(remainder, "color: 0xffff00, wireframe: false, opacity: 0.25, transparent: true");
-            else if (num < 5)
-                this.vis.setStyle(remainder, "color: 0x00ff00, wireframe: false, opacity: 0.25, transparent: true");
-            else if (num < 7)
-                this.vis.setStyle(remainder, "color: 0x0000ff, wireframe: false, opacity: 0.25, transparent: true");
-            else if (num == 9)
-                num = 0;
-
-        }
-    }
-
-    /**
-     *
-     */
-    private void showAxis() {
-        var axis = new Item(900, 1, 1, 0);
-        this.vis.add(axis);
-        this.vis.setStyle(axis, "color: 0xff0000");
-
-        axis = new Item(1, 900, 1, 0);
-        this.vis.add(axis);
-        this.vis.setStyle(axis, "color: 0x00ff00");
-
-        axis = new Item(1, 1, 900, 0);
-        this.vis.add(axis);
-        this.vis.setStyle(axis, "color: 0x0000ff");
-    }
-
 }

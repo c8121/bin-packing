@@ -1,7 +1,5 @@
 package de.c8121.packing;
 
-import java.util.Objects;
-
 /**
  * Position denotes center of Box.
  */
@@ -25,7 +23,7 @@ public class Box implements Position, Dimension {
     public Box(final Position position, final Dimension dimension) {
 
         if (position != null)
-            this.move(position.x(), position.y(), position.z());
+            this.placeAt(position.x(), position.y(), position.z());
 
         if (dimension != null)
             this.resize(dimension.xs(), dimension.ys(), dimension.zs());
@@ -36,7 +34,7 @@ public class Box implements Position, Dimension {
      * Copy constructor
      */
     public Box(final Box box) {
-        this.move(box.x, box.y, box.z);
+        this.placeAt(box.x, box.y, box.z);
         this.resize(box.xs, box.ys, box.zs);
     }
 
@@ -44,7 +42,7 @@ public class Box implements Position, Dimension {
      * Creates a box with given size at given position
      */
     public Box(final int x, final int y, final int z, final int xs, final int ys, final int zs) {
-        this.move(x, y, z);
+        this.placeAt(x, y, z);
         this.resize(xs, ys, zs);
     }
 
@@ -98,10 +96,19 @@ public class Box implements Position, Dimension {
     /**
      *
      */
-    public void move(final int x, final int y, final int z) {
+    public void placeAt(final int x, final int y, final int z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    /**
+     *
+     */
+    public void moveBy(final int x, final int y, final int z) {
+        this.x += x;
+        this.y += y;
+        this.z += z;
     }
 
     /**
@@ -153,9 +160,20 @@ public class Box implements Position, Dimension {
     public boolean intersects(final Box b) {
         if (this.xMin() < b.xMax() && this.xMax() > b.xMin())
             if (this.yMin() < b.yMax() && this.yMax() > b.yMin())
-                if (this.zMin() < b.zMax() && this.zMax() > b.zMin())
+                if (this.zMin() < b.zMax() && this.zMax() > b.zMin()) {
+                    //System.out.println("Intersect:\n\t" + this + "\n\t" + b);
                     return true;
+                }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Box{"
+                + x + "/" + y + "/" + z
+                + " " + xs + "/" + ys + "/" + zs
+                + " " + xMin() + ".." + xMax() + "/" + yMin() + ".." + yMax() + "/" + zMin() + ".." + zMax()
+                + "}";
     }
 }

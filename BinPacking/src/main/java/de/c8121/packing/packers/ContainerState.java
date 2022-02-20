@@ -6,7 +6,12 @@ public class ContainerState {
 
     private final Container container;
 
-    private int remainWeight;
+    /**
+     * Root placement
+     */
+    private final Placement placement;
+
+    private int currentWeight;
 
 
     /**
@@ -14,7 +19,8 @@ public class ContainerState {
      */
     public ContainerState(Container container) {
         this.container = container;
-        this.remainWeight = container.maxLoadWeight();
+        this.placement = new Placement(container);
+        this.currentWeight = 0;
     }
 
     /**
@@ -28,6 +34,13 @@ public class ContainerState {
      *
      */
     public int remainWeight() {
-        return this.remainWeight;
+        return this.container.maxLoadWeight() - this.currentWeight;
+    }
+
+    /**
+     * Get the first placement (root placement) to start packaging at.
+     */
+    public Placement placement() {
+        return this.placement;
     }
 }

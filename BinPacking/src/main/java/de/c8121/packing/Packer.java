@@ -6,6 +6,7 @@ public interface Packer {
         Success,
         FailedDoesNotFitIn,
         FailedToHeavy,
+        FailedNoSpaceLeft,
         FailedReasonUnknown
     }
 

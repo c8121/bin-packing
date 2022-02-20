@@ -1,8 +1,6 @@
 package de.c8121.packing.visualization;
 
 import de.c8121.packing.Box;
-import de.c8121.packing.Item;
-import de.c8121.packing.packers.Placement;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -31,6 +29,29 @@ public class ThreeJs {
     public void setStyle(final Box box, final String style) {
         this.styles.put(box, style);
     }
+
+
+    /**
+     * Copy all boxes which have been added to far and move them by given values.
+     */
+    public void copyTo(final int x, final int y, final int z) {
+
+        var copies = new ArrayList<Box>();
+
+        for (var box : this.boxes) {
+
+            var copy = new Box(box);
+            copy.moveBy(x, y, z);
+            copies.add(copy);
+
+            var style = this.styles.get(box);
+            if (style != null)
+                this.styles.put(copy, style);
+        }
+
+        this.boxes.addAll(copies);
+    }
+
 
     /**
      *
@@ -67,6 +88,7 @@ public class ThreeJs {
                 .append("camera.up.set( 0, 0, 1 );\n")
                 .append("const renderer = new THREE.WebGLRenderer();\n")
                 .append("renderer.setSize( window.innerWidth, window.innerHeight );\n")
+                .append("renderer.setClearColor( 0xeeeeee );\n")
                 .append("document.body.appendChild( renderer.domElement );\n");
 
         html
@@ -84,7 +106,7 @@ public class ThreeJs {
 
             var style = this.styles.get(box);
             if (style == null)
-                style = "color: 0xffff00, wireframe: true";
+                style = "color: 0x000000, wireframe: true";
 
             html.append("material = new THREE.MeshBasicMaterial({").append(style).append("});\n");
 
