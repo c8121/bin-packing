@@ -46,6 +46,7 @@ public class SingleContainerPacker implements Packer {
             return PackItemResult.FailedNoSpaceLeft;
 
         placement.setItem(item);
+        this.containerState.addItem(item);
 
         return PackItemResult.Success;
     }

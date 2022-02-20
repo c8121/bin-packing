@@ -27,7 +27,7 @@ class SingleContainerPackerTest extends ThreeJsTestBase {
      */
     public void test() throws IOException {
 
-        var container = new Container(200, 200, 200, 100);
+        var container = new Container(200, 200, 200, 200);
         this.vis.add(container);
 
         this.packer = new SingleContainerPacker(container);

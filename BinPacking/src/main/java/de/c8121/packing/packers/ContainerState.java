@@ -1,6 +1,10 @@
 package de.c8121.packing.packers;
 
 import de.c8121.packing.Container;
+import de.c8121.packing.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContainerState {
 
@@ -11,6 +15,7 @@ public class ContainerState {
      */
     private final Placement placement;
 
+    private final List<Item> items = new ArrayList<>();
     private int currentWeight;
 
 
@@ -28,6 +33,14 @@ public class ContainerState {
      */
     public Container container() {
         return this.container;
+    }
+
+    /**
+     *
+     */
+    public void addItem(final Item item) {
+        this.items.add(item);
+        this.currentWeight += item.weight();
     }
 
     /**
