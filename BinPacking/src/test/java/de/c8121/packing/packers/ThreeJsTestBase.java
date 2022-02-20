@@ -2,6 +2,10 @@ package de.c8121.packing.packers;
 
 import de.c8121.packing.Item;
 import de.c8121.packing.visualization.ThreeJs;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 public abstract class ThreeJsTestBase {
 
@@ -57,5 +61,14 @@ public abstract class ThreeJsTestBase {
         axis = new Item(1, 1, 900, 0);
         this.vis.add(axis);
         this.vis.setStyle(axis, "color: 0x0000ff");
+    }
+
+    /**
+     *
+     */
+    public void writeHtml() throws IOException {
+        var file = new File(FileUtils.getTempDirectory(), this.getClass().getSimpleName() + ".html");
+        System.out.println("Writing to " + file);
+        this.vis.writeHtml(file);
     }
 }

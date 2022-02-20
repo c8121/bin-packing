@@ -12,9 +12,20 @@ public class Item extends Box {
         this.weight = weight;
     }
 
+    /**
+     *
+     */
     public Item(final int xs, final int ys, final int zs, final int weight) {
         super(xs, ys, zs);
         this.weight = weight;
+    }
+
+    /**
+     * Copy constructor
+     */
+    public Item(final Item item) {
+        super(item);
+        this.weight = item.weight;
     }
 
     /**

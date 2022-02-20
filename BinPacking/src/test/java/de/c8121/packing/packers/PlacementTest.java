@@ -45,9 +45,6 @@ class PlacementTest extends ThreeJsTestBase {
 
         this.showAxis();
 
-        var file = new File(FileUtils.getTempDirectory(), this.getClass().getSimpleName() + ".html");
-        System.out.println("Writing to " + file);
-        this.vis.writeHtml(file);
-
+        this.writeHtml();
     }
 }
