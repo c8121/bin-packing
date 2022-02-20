@@ -27,7 +27,7 @@ class SingleContainerPackerTest extends ThreeJsTestBase {
      */
     public void test() throws IOException {
 
-        var container = new Container(200, 200, 200, 200);
+        var container = new Container(200, 200, 200, 400);
         this.vis.add(container);
 
         this.packer = new SingleContainerPacker(container);
@@ -60,9 +60,9 @@ class SingleContainerPackerTest extends ThreeJsTestBase {
     private Item createRandomItem() {
         var random = ThreadLocalRandom.current();
         return new Item(
-                random.nextInt(10, 90),
-                random.nextInt(10, 90),
-                random.nextInt(10, 90),
+                random.nextInt(40, 70),
+                random.nextInt(40, 70),
+                random.nextInt(40, 70),
                 random.nextInt(1, 10)
         );
     }

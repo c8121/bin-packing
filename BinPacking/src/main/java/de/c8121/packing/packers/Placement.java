@@ -261,12 +261,27 @@ public class Placement extends Box {
 
         Objects.requireNonNull(box);
 
+        Placement best = null;
+        double bestScore = 0;
+
         for (var remainder : this.remainders) {
-            if (Dimension.fitsIn(box, remainder))
-                return remainder;
+            if (Dimension.fitsIn(box, remainder)) {
+
+                // Consider better if box uses more space on x- or y-axis
+
+                var currentScore = Math.max(
+                        (double) box.xs() / remainder.xs(),
+                        (double) box.ys() / remainder.ys()
+                );
+
+                if (best == null || bestScore < currentScore) {
+                    best = remainder;
+                    bestScore = currentScore;
+                }
+            }
         }
 
-        return null;
+        return best;
     }
 
     /**
