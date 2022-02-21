@@ -24,4 +24,14 @@ public class ItemListSorter {
                 .thenComparing(Item::zs));
     }
 
+    /**
+     * Sort given {@link Item}s by largest footprint (the largest area at bottom)
+     * and lowest height ({@link Item#zs()}
+     */
+    public static void sortByLargestFootprintAndHighestVolumeAndLowestHeight(final List<Item> items) {
+        items.sort(
+                Comparator.comparingDouble((Item i) -> i.xs() * i.ys() * -1)
+                        .thenComparing((Item i) -> i.xs() * i.ys() * i.zs() * -1)
+                        .thenComparing(Item::zs));
+    }
 }

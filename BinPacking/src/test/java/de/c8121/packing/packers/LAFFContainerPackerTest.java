@@ -1,8 +1,10 @@
-package de.c8121.packing.util;
+package de.c8121.packing.packers;
 
 import de.c8121.packing.Item;
-import de.c8121.packing.packers.ContainerPackerTestBase;
-import de.c8121.packing.packers.LAFFContainerPacker;
+import de.c8121.packing.util.BasicContainer;
+import de.c8121.packing.util.BasicItem;
+import de.c8121.packing.util.ItemListSorter;
+import de.c8121.packing.util.ItemRotator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,14 +14,14 @@ import java.util.List;
  * Not an automated test. Used from IDE for testing.
  * Creates html-file in temp directory containing a THREE.js scene.
  */
-class ItemListSorterTest extends ContainerPackerTestBase {
+class LAFFContainerPackerTest extends ContainerPackerTestBase {
 
 
     /**
      *
      */
     public static void main(String[] args) throws IOException {
-        new ItemListSorterTest().test();
+        new LAFFContainerPackerTest().test();
     }
 
     /**
@@ -34,10 +36,14 @@ class ItemListSorterTest extends ContainerPackerTestBase {
         this.createContainer(randomItems, 0);
 
         ItemListSorter.sortByLargestFootprint(randomItems);
-        this.createContainer(this.copyItems(randomItems), 350);
+        this.createContainer(this.copyItems(randomItems), 300);
 
         ItemListSorter.sortByLargestFootprintAndLowestHeight(randomItems);
-        this.createContainer(this.copyItems(randomItems), 700);
+        this.createContainer(this.copyItems(randomItems), 600);
+
+        var rotatedItems = ItemRotator.rotateToLargestFootprintAndLowestHeight(randomItems);
+        ItemListSorter.sortByLargestFootprintAndHighestVolumeAndLowestHeight(rotatedItems);
+        this.createContainer(rotatedItems, 900);
 
         this.writeHtml();
     }
