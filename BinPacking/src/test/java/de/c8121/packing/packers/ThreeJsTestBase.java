@@ -1,12 +1,16 @@
 package de.c8121.packing.packers;
 
-import de.c8121.packing.Item;
+import de.c8121.packing.Placement;
+import de.c8121.packing.util.BasicBox;
 import de.c8121.packing.visualization.ThreeJs;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Base implementation for tests that generate THREE.js scenes.
+ */
 public abstract class ThreeJsTestBase {
 
     protected final ThreeJs vis = new ThreeJs();
@@ -50,15 +54,15 @@ public abstract class ThreeJsTestBase {
      */
     public void showAxis() {
 
-        var axis = new Item(900, 1, 1, 0);
+        var axis = new BasicBox(900, 1, 1);
         this.vis.add(axis);
         this.vis.setStyle(axis, "color: 0xff0000");
 
-        axis = new Item(1, 900, 1, 0);
+        axis = new BasicBox(1, 900, 1);
         this.vis.add(axis);
         this.vis.setStyle(axis, "color: 0x00ff00");
 
-        axis = new Item(1, 1, 900, 0);
+        axis = new BasicBox(1, 1, 900);
         this.vis.add(axis);
         this.vis.setStyle(axis, "color: 0x0000ff");
     }

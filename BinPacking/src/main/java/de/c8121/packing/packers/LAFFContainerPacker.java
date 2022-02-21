@@ -1,20 +1,19 @@
 package de.c8121.packing.packers;
 
-import de.c8121.packing.Container;
-import de.c8121.packing.Dimension;
-import de.c8121.packing.Item;
-import de.c8121.packing.Packer;
+import de.c8121.packing.*;
 
-public class SingleContainerPacker implements Packer {
+public class LAFFContainerPacker implements Packer {
 
     private final ContainerState containerState;
+    private final LAFFPlacement rootPlacement;
 
 
     /**
      *
      */
-    public SingleContainerPacker(final Container container) {
+    public LAFFContainerPacker(final Container container) {
         this.containerState = new ContainerState(container);
+        this.rootPlacement = new LAFFPlacement(container);
     }
 
     /**
@@ -34,12 +33,12 @@ public class SingleContainerPacker implements Packer {
         if (item.weight() > this.containerState.remainWeight())
             return PackItemResult.FailedToHeavy;
 
-        if (!Dimension.fitsIn(item, this.containerState.container()))
+        if (!item.fitsIn(this.containerState.container()))
             return PackItemResult.FailedDoesNotFitIn;
 
         //Find placement to add item to
         var placement = this.findPlacement(
-                this.containerState.placement(),
+                this.rootPlacement,
                 item
         );
         if (placement == null)

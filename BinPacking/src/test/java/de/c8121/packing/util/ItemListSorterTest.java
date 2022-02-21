@@ -2,14 +2,18 @@ package de.c8121.packing.util;
 
 import de.c8121.packing.Container;
 import de.c8121.packing.Item;
-import de.c8121.packing.packers.SingleContainerPacker;
-import de.c8121.packing.packers.SingleContainerPackerTest;
+import de.c8121.packing.packers.ContainerPackerTestBase;
+import de.c8121.packing.packers.LAFFContainerPacker;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-class ItemListSorterTest extends SingleContainerPackerTest {
+/**
+ * Not an automated test. Used from IDE for testing.
+ * Creates html-file in temp directory containing a THREE.js scene.
+ */
+class ItemListSorterTest extends ContainerPackerTestBase {
 
 
     /**
@@ -41,11 +45,11 @@ class ItemListSorterTest extends SingleContainerPackerTest {
      */
     private void createContainer(final List<Item> items, int xOffset) {
 
-        var container = new Container(200, 200, 200, 400);
+        var container = new BasicContainer(200, 200, 200, 400);
         container.moveBy(xOffset, 0, 0);
         this.vis.add(container);
 
-        var packer = new SingleContainerPacker(container);
+        var packer = new LAFFContainerPacker(container);
         this.packContainer(packer, items);
     }
 
@@ -55,7 +59,7 @@ class ItemListSorterTest extends SingleContainerPackerTest {
     private List<Item> copyItems(final List<Item> items) {
         var result = new ArrayList<Item>(items.size());
         for (var item : items)
-            result.add(new Item(item));
+            result.add(new BasicItem(item));
         return result;
     }
 }

@@ -1,9 +1,9 @@
 package de.c8121.packing.packers;
 
 import de.c8121.packing.Box;
-import de.c8121.packing.Dimension;
 import de.c8121.packing.Item;
-import de.c8121.packing.Position;
+import de.c8121.packing.Placement;
+import de.c8121.packing.util.BasicBox;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,71 +11,59 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * Default Placement implementation.
+ * Based on LAFF-Algorithm, so {@link Item}s should be added in a sorted manner:
+ * Items with the largest footprint first.
+ * Please use {@link de.c8121.packing.util.ItemListSorter#sortByLargestFootprint(List)} for example.
+ * <p>
+ * Offers one remaining Placement filling the whole box
+ * if no {@link Item} was set ({@link #setItem(Item)}.
+ * <p>
+ * Offers 6 remaining Placement around the {@link Item}
+ * after it was set. As remaining Placements overlap, not all can be used,
+ * but the best Placement will be chosen by {@link #findPlacement(Item)}.
+ * <p>
  * Remainders:
  * <p>
  * A) No item placed
  * <pre><code>
- *   +----------------------------------------------+
- *   |                                              |
- *   |                  Remainder A                 |
- *   |                                              |
- *   |                                              |
- *   |                                              |
- *   |                                              |
- *   |                                              |
- *   |                                              |
- *   |                                              |
- *   +----------------------------------------------+
+ *   +--------------------------------------+
+ *   |          Remainder A                 |
+ *   |                                      |
+ *   +--------------------------------------+
  *   </code></pre>
- * B)
- *
- * <pre><code>
- *   +--------+-------------------------------------+
- *   |        |                                     |
- *   | Item   |          Remainder B                |
- *   | Rem. Z |                                     |
- *   +--------+-------------------------------------+
- *   |                                              |
- *   |                                              |
- *   |                Remainder C                   |
- *   |                                              |
- *   |                                              |
- *   +----------------------------------------------+
- * </code></pre>
  * <p>
- * C)
- *
+ * B-F, Z) Item was placed ({@link #setItem(Item)})
  * <pre><code>
- *   +--------+-------------------------------------+
- *   |        |                                     |
- *   | Item   |           Remainder D               |
- *   | Rem. Z |                                     |
- *   +--------+                                     |
- *   |        |                                     |
- *   |  Rem.  |                                     |
- *   |  E     |                                     |
- *   |        |                                     |
- *   |        |                                     |
- *   +--------+-------------------------------------+
+ *   +--------+-----------------------------+
+ *   | Item   |          Remainder B        |
+ *   | Rem. Z |                             |
+ *   +--------+-----------------------------+
+ *   |         Remainder C                  |
+ *   |                                      |
+ *   +--------------------------------------+
  * </code></pre>
- * <p>
- * D)
- *
+ * <pre><code>
+ *   +--------+-----------------------------+
+ *   | Item   |           Remainder D       |
+ *   | Rem. Z |                             |
+ *   +--------+                             |
+ *   |  Rem.  |                             |
+ *   |  E     |                             |
+ *   |        |                             |
+ *   +--------+-----------------------------+
+ * </code></pre>
  * <pre><code>
  *   +--------+
- *   |        |
  *   | Item   |
  *   | Rem. Z |
- *   +--------+-------------------------------------+
- *            |                                     |
- *            |                                     |
- *            |           Remainder F               |
- *            |                                     |
- *            |                                     |
- *            +-------------------------------------+
+ *   +--------+-----------------------------+
+ *            |           Remainder F       |
+ *            |                             |
+ *            +-----------------------------+
  * </code></pre>
  */
-public class Placement extends Box {
+public class LAFFPlacement extends BasicBox implements Box, Placement {
 
     private final Box parent;
     private Item item;
@@ -83,17 +71,17 @@ public class Placement extends Box {
     /**
      * All placement children which have items.
      */
-    private final Set<Placement> children = new HashSet<>();
+    private final Set<LAFFPlacement> children = new HashSet<>();
 
     /**
      * All remainders available to add item to.
      */
-    private final Set<Placement> remainders = new HashSet<>();
+    private final Set<LAFFPlacement> remainders = new HashSet<>();
 
     /**
      *
      */
-    private Placement(final Box parent, final Box positionAndDimension) {
+    private LAFFPlacement(final Box parent, final Box positionAndDimension) {
 
         super(positionAndDimension);
         this.parent = parent;
@@ -105,36 +93,47 @@ public class Placement extends Box {
     /**
      *
      */
-    public Placement(final Box parent) {
+    public LAFFPlacement(final Box parent) {
         this(parent, parent);
     }
 
     /**
      *
      */
-    public Set<Placement> children() {
-        return Set.copyOf(this.children);
-    }
-
-    /**
-     *
-     */
+    @Override
     public Item item() {
         return this.item;
     }
 
     /**
+     *
+     */
+    @Override
+    public Box parent() {
+        return this.parent;
+    }
+
+    /**
+     *
+     */
+    @Override
+    public Set<Placement> children() {
+        return Set.copyOf(this.children);
+    }
+
+
+    /**
      * <ul>
-     * <li>Set item to {@code this}.</li>
-     * <li>Create remainders.</li>
-     * <li>Remove intersecting remainders from parent.</li>
-     * <li>Add {@code this} to {@link #parent#children}.</li>
+     *     <li>Set item to {@code this}.</li>
+     *     <li>Create remainders.</li>
+     *     <li>Remove intersecting remainders from parent.</li>
+     *     <li>Add {@code this} to {@link #parent#children}.</li>
      * </ul>
      */
     public void setItem(final Item item) {
 
         Objects.requireNonNull(item);
-        if (!Dimension.fitsIn(item, this))
+        if (!item.fitsIn(this))
             throw new IllegalArgumentException("Item does not fit");
 
         this.item = item;
@@ -147,7 +146,7 @@ public class Placement extends Box {
 
         this.remainders.clear();
 
-        this.addRemainder(new Box(
+        this.addRemainder(new BasicBox(
                 item.x() + item.xs() / 2 + (this.xs() - item.xs()) / 2,
                 item.y(),
                 this.z(),
@@ -156,7 +155,7 @@ public class Placement extends Box {
                 this.zs()
         ));
 
-        this.addRemainder(new Box(
+        this.addRemainder(new BasicBox(
                 this.x(),
                 item.y() + item.ys() / 2 + (this.ys() - item.ys()) / 2,
                 this.z(),
@@ -165,7 +164,7 @@ public class Placement extends Box {
                 this.zs()
         ));
 
-        this.addRemainder(new Box(
+        this.addRemainder(new BasicBox(
                 item.x() + item.xs() / 2 + (this.xs() - item.xs()) / 2,
                 this.y(),
                 this.z(),
@@ -174,7 +173,7 @@ public class Placement extends Box {
                 this.zs()
         ));
 
-        this.addRemainder(new Box(
+        this.addRemainder(new BasicBox(
                 item.x(),
                 item.y() + item.ys() / 2 + (this.ys() - item.ys()) / 2,
                 this.z(),
@@ -183,7 +182,7 @@ public class Placement extends Box {
                 this.zs()
         ));
 
-        this.addRemainder(new Box(
+        this.addRemainder(new BasicBox(
                 item.x(),
                 item.y(),
                 this.z() + item.zs() / 2,
@@ -192,7 +191,7 @@ public class Placement extends Box {
                 this.zs() - item.zs()
         ));
 
-        this.addRemainder(new Box(
+        this.addRemainder(new BasicBox(
                 item.x() + item.xs() / 2 + (this.xs() - item.xs()) / 2,
                 item.y() + item.ys() / 2 + (this.ys() - item.ys()) / 2,
                 this.z(),
@@ -202,9 +201,9 @@ public class Placement extends Box {
         ));
 
 
-        if (this.parent != null && this.parent instanceof Placement) {
+        if (this.parent != null && this.parent instanceof LAFFPlacement) {
 
-            var parentPlacement = (Placement) this.parent;
+            var parentPlacement = (LAFFPlacement) this.parent;
 
             //Add this to children of parent.
             parentPlacement.children.add(this);
@@ -234,11 +233,11 @@ public class Placement extends Box {
             return;
 
         for (var existing : this.remainders) {
-            if (Position.positionEquals(box, existing) && Dimension.dimensionEquals(box, existing))
+            if (box.positionEquals(existing) && box.dimensionEquals(existing))
                 return;
         }
 
-        var placement = new Placement(this, box);
+        var placement = new LAFFPlacement(this, box);
         this.remainders.add(placement);
 
         //System.out.println("Add remainder to " + this + "\n\t+" + box);
@@ -247,6 +246,7 @@ public class Placement extends Box {
     /**
      *
      */
+    @Override
     public List<Placement> remainders() {
         return List.copyOf(this.remainders);
     }
@@ -255,17 +255,18 @@ public class Placement extends Box {
      * Find remainder where given {@code box} fits in.
      * Checks all remainders of {@code this} (see {@link #remainders()}), not recursive.
      *
-     * @return Matching {@link Placement} object or {@code null}.
+     * @return Matching {@link LAFFPlacement} object or {@code null}.
      */
-    public Placement findRemainder(final Box box) {
+    @Override
+    public LAFFPlacement findRemainder(final Box box) {
 
         Objects.requireNonNull(box);
 
-        Placement best = null;
+        LAFFPlacement best = null;
         double bestScore = 0;
 
         for (var remainder : this.remainders) {
-            if (Dimension.fitsIn(box, remainder)) {
+            if (box.fitsIn(remainder)) {
 
                 // Consider better if box uses more space on x- or y-axis
 
@@ -285,8 +286,10 @@ public class Placement extends Box {
     }
 
     /**
-     * Find {@link Placement} holding given {@link Item}
+     * Find {@link Placement} holding given {@link Item}.
+     * Lookup will be done recursively starting as {@code this}.
      */
+    @Override
     public Placement findPlacement(final Item item) {
 
         if (this.item == item)

@@ -1,6 +1,7 @@
 package de.c8121.packing.visualization;
 
 import de.c8121.packing.Box;
+import de.c8121.packing.util.BasicBox;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -40,7 +41,7 @@ public class ThreeJs {
 
         for (var box : this.boxes) {
 
-            var copy = new Box(box);
+            var copy = new BasicBox(box);
             copy.moveBy(x, y, z);
             copies.add(copy);
 

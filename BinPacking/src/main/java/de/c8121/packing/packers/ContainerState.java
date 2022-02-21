@@ -10,11 +10,6 @@ public class ContainerState {
 
     private final Container container;
 
-    /**
-     * Root placement
-     */
-    private final Placement placement;
-
     private final List<Item> items = new ArrayList<>();
     private int currentWeight;
 
@@ -24,7 +19,6 @@ public class ContainerState {
      */
     public ContainerState(Container container) {
         this.container = container;
-        this.placement = new Placement(container);
         this.currentWeight = 0;
     }
 
@@ -33,6 +27,13 @@ public class ContainerState {
      */
     public Container container() {
         return this.container;
+    }
+
+    /**
+     *
+     */
+    public List<Item> items() {
+        return List.copyOf(this.items);
     }
 
     /**
@@ -50,10 +51,4 @@ public class ContainerState {
         return this.container.maxLoadWeight() - this.currentWeight;
     }
 
-    /**
-     * Get the first placement (root placement) to start packaging at.
-     */
-    public Placement placement() {
-        return this.placement;
-    }
 }
