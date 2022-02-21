@@ -14,7 +14,7 @@ import java.util.Set;
  * Default Placement implementation.
  * Based on LAFF-Algorithm, so {@link Item}s should be added in a sorted manner:
  * Items with the largest footprint first.
- * Please use {@link de.c8121.packing.util.ItemListSorter#sortByLargestFootprint(List)} for example.
+ * Please use {@link de.c8121.packing.util.ItemListSorter#sortByLargestFootprintAndLowestHeight(List)} for example.
  * <p>
  * Offers one remaining Placement filling the whole box
  * if no {@link Item} was set ({@link #setItem(Item)}.

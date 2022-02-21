@@ -35,7 +35,10 @@ class ItemListSorterTest extends ContainerPackerTestBase {
         this.createContainer(randomItems, 0);
 
         ItemListSorter.sortByLargestFootprint(randomItems);
-        this.createContainer(this.copyItems(randomItems), 450);
+        this.createContainer(this.copyItems(randomItems), 350);
+
+        ItemListSorter.sortByLargestFootprintAndLowestHeight(randomItems);
+        this.createContainer(this.copyItems(randomItems), 700);
 
         this.writeHtml();
     }
