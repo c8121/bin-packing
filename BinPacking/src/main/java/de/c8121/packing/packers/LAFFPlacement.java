@@ -16,8 +16,10 @@ import java.util.Set;
  * Items with the largest footprint first.
  * Please use {@link de.c8121.packing.util.ItemListSorter#sortByLargestFootprintAndLowestHeight(List)} for example.
  * <p>
+ * See: http://www.zahidgurbuz.com/yayinlar/An%20Efficient%20Algorithm%20for%203D%20Rectangular%20Box%20Packing.pdf
+ * <p>
  * Offers one remaining Placement filling the whole box
- * if no {@link Item} was set ({@link #setItem(Item)}.
+ * if no {@link Item} was set ({@link #setItem(Item)}).
  * <p>
  * Offers 6 remaining Placement around the {@link Item}
  * after it was set. As remaining Placements overlap, not all can be used,

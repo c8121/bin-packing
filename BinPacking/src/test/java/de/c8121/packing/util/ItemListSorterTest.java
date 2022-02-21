@@ -1,6 +1,5 @@
 package de.c8121.packing.util;
 
-import de.c8121.packing.Container;
 import de.c8121.packing.Item;
 import de.c8121.packing.packers.ContainerPackerTestBase;
 import de.c8121.packing.packers.LAFFContainerPacker;
