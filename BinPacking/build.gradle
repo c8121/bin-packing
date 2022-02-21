@@ -1,16 +1,20 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 repositories {
     mavenCentral()
 }
 
+group = 'de.c8121.packing'
+version = '0.0.1-SNAPSHOT'
+
 dependencies {
 
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 
-     // Use JUnit Jupiter API for testing.
+    // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
     // Use JUnit Jupiter Engine for testing.
@@ -20,4 +24,35 @@ dependencies {
 test {
     // Use junit platform for unit tests
     useJUnitPlatform()
+}
+
+publishing {
+
+    //
+    // To publish run the following commands:
+    // export GIT_USER="username"
+    // export GIT_TOKEN="token"
+    // ./gradlew publish
+    //
+    // Note: Once published, you cannot delete a public package
+    // if any version of the package has more than 5000 downloads.
+    // (https://docs.github.com/en/packages/learn-github-packages/deleting-and-restoring-a-package#about-public-package-deletion)
+    //
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/c8121/bin-packing")
+            credentials {
+                username = System.getenv("GIT_USER")
+                password = System.getenv("GIT_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+            artifactId = 'bin-packing'
+        }
+    }
 }
