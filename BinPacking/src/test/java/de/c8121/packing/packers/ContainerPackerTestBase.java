@@ -1,10 +1,10 @@
 package de.c8121.packing.packers;
 
 import de.c8121.packing.Item;
+import de.c8121.packing.PackItemResult;
 import de.c8121.packing.Packer;
 import de.c8121.packing.util.BasicItem;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,32 +14,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class ContainerPackerTestBase extends ThreeJsTestBase {
 
     private long lastColor = 0xff0000;
-
-    /**
-     *
-     */
-    public void packContainer(final Packer packer, final List<Item> items) {
-
-        var resultInfo = new HashMap<Packer.PackItemResult, Integer>();
-        int packedVolume = 0;
-        int packedWeight = 0;
-
-        for (var item : items) {
-
-            var result = this.addItem(packer, item);
-            var cnt = resultInfo.get(result);
-            resultInfo.put(result, cnt != null ? cnt + 1 : 1);
-
-            if (result == Packer.PackItemResult.Success) {
-                packedVolume += item.xs() * item.ys() * item.zs();
-                packedWeight += item.weight();
-            }
-        }
-
-        System.out.println(packer);
-        System.out.println(resultInfo);
-        System.out.println("Packed volume=" + packedVolume + ", weight=" + packedWeight);
-    }
 
     /**
      *
@@ -57,10 +31,28 @@ public abstract class ContainerPackerTestBase extends ThreeJsTestBase {
     /**
      *
      */
-    public Packer.PackItemResult addItem(final Packer packer, final Item item) {
+    public void packList(final Packer packer, final List<Item> items) {
+
+        var result = packer.pack(items);
+
+        var success = result.get(PackItemResult.Success);
+        for (var i : success) {
+            this.vis.add(i);
+            this.vis.setStyle(i, "color: " + this.lastColor + ", wireframe: false");
+            this.lastColor += 1000;
+        }
+
+        System.out.println(packer);
+        System.out.println(result);
+    }
+
+    /**
+     *
+     */
+    public PackItemResult addItem(final Packer packer, final Item item) {
 
         var result = packer.add(item);
-        if (Packer.PackItemResult.Success != result)
+        if (PackItemResult.Success != result)
             return result;
 
         this.vis.add(item);

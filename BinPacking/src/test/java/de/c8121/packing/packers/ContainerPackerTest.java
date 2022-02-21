@@ -1,6 +1,5 @@
 package de.c8121.packing.packers;
 
-import de.c8121.packing.Container;
 import de.c8121.packing.Item;
 import de.c8121.packing.util.BasicContainer;
 import de.c8121.packing.util.BasicItem;
@@ -32,7 +31,7 @@ public class ContainerPackerTest extends ContainerPackerTestBase {
         var packer = new LAFFContainerPacker(container);
 
         var item = new BasicItem(50, 50, 15, 10);
-        this.addItem(packer, item);
+        System.out.println(item + ": " + this.addItem(packer, item));
 
         //this.showRemainders(this.packer.state().placement().findPlacement(item));
         //this.vis.copyTo(450, 0, 0);
@@ -41,7 +40,7 @@ public class ContainerPackerTest extends ContainerPackerTestBase {
         for (int i = 0; i < 220; i++)
             randomItems.add(this.createRandomItem());
 
-        this.packContainer(packer, randomItems);
+        this.packList(packer, randomItems);
 
         //this.showRemainders(this.packer.state().placement().findPlacement(item));
         //this.showAllRemainders(this.packer.state().placement());

@@ -2,7 +2,10 @@ package de.c8121.packing.packers;
 
 import de.c8121.packing.*;
 import de.c8121.packing.util.BasicContainerState;
+import de.c8121.packing.util.BasicPackListResult;
+import de.c8121.packing.util.ItemListSorter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +36,26 @@ public class LAFFContainerPacker implements Packer {
     @Override
     public ContainerState state() {
         return this.containerState;
+    }
+
+
+    /**
+     *
+     */
+    @Override
+    public PackListResult pack(List<Item> items) {
+
+        var sortedItems = new ArrayList<>(items);
+        ItemListSorter.sortByLargestFootprintAndLowestHeight(sortedItems);
+
+        var result = new BasicPackListResult();
+
+        for (var item : sortedItems) {
+            var itemResult = this.add(item);
+            result.add(itemResult, item);
+        }
+
+        return result;
     }
 
     /**
