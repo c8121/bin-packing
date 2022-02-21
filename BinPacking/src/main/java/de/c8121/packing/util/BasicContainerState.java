@@ -1,23 +1,26 @@
-package de.c8121.packing.packers;
+package de.c8121.packing.util;
 
 import de.c8121.packing.Container;
+import de.c8121.packing.ContainerState;
 import de.c8121.packing.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContainerState {
+/**
+ * Represents the current state of packaging.
+ */
+public class BasicContainerState implements ContainerState {
 
     private final Container container;
 
     private final List<Item> items = new ArrayList<>();
     private int currentWeight;
 
-
     /**
      *
      */
-    public ContainerState(Container container) {
+    public BasicContainerState(Container container) {
         this.container = container;
         this.currentWeight = 0;
     }
@@ -25,6 +28,7 @@ public class ContainerState {
     /**
      *
      */
+    @Override
     public Container container() {
         return this.container;
     }
@@ -32,6 +36,7 @@ public class ContainerState {
     /**
      *
      */
+    @Override
     public List<Item> items() {
         return List.copyOf(this.items);
     }
@@ -47,6 +52,7 @@ public class ContainerState {
     /**
      *
      */
+    @Override
     public int remainWeight() {
         return this.container.maxLoadWeight() - this.currentWeight;
     }

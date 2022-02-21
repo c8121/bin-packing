@@ -1,10 +1,21 @@
 package de.c8121.packing.packers;
 
 import de.c8121.packing.*;
+import de.c8121.packing.util.BasicContainerState;
 
+import java.util.List;
+
+/**
+ * Default {@link de.c8121.packing.Packer} implementation.
+ * Based on LAFF-Algorithm, so {@link Item}s should be added in a sorted manner:
+ * Items with the largest footprint first.
+ * Please use {@link de.c8121.packing.util.ItemListSorter#sortByLargestFootprintAndLowestHeight(List)} for example.
+ * <p>
+ * See: http://www.zahidgurbuz.com/yayinlar/An%20Efficient%20Algorithm%20for%203D%20Rectangular%20Box%20Packing.pdf
+ */
 public class LAFFContainerPacker implements Packer {
 
-    private final ContainerState containerState;
+    private final BasicContainerState containerState;
     private final LAFFPlacement rootPlacement;
 
 
@@ -12,13 +23,14 @@ public class LAFFContainerPacker implements Packer {
      *
      */
     public LAFFContainerPacker(final Container container) {
-        this.containerState = new ContainerState(container);
+        this.containerState = new BasicContainerState(container);
         this.rootPlacement = new LAFFPlacement(container);
     }
 
     /**
      *
      */
+    @Override
     public ContainerState state() {
         return this.containerState;
     }

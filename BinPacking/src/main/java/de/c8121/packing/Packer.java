@@ -21,4 +21,10 @@ public interface Packer {
      * achieve best results.
      */
     PackItemResult add(final Item item);
+
+
+    /**
+     * Current state of packing.
+     */
+    ContainerState state();
 }
