@@ -1,7 +1,8 @@
 package de.c8121.packing;
 
 /**
- * Position denotes center of Box.
+ * Geometry of a {@link Item} or {@link Container}.
+ * Position x/y/z denotes center of Box.
  */
 public interface Box {
 

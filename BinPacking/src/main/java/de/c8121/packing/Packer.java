@@ -1,5 +1,9 @@
 package de.c8121.packing;
 
+
+/**
+ * Packs {@link Item}s into one {@link Container}.
+ */
 public interface Packer {
 
     enum PackItemResult {

@@ -2,7 +2,6 @@ package de.c8121.packing.util;
 
 import de.c8121.packing.Item;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
