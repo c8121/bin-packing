@@ -9,6 +9,11 @@ import java.util.List;
 public interface Packer {
 
     /**
+     *
+     */
+    Container container();
+
+    /**
      * Try to pack all of given {@link Item}s to {@link Container}.
      */
     PackListResult pack(final List<Item> items);

@@ -16,7 +16,7 @@ import java.util.List;
  * <p>
  * See: http://www.zahidgurbuz.com/yayinlar/An%20Efficient%20Algorithm%20for%203D%20Rectangular%20Box%20Packing.pdf
  */
-public class LAFFContainerPacker implements Packer {
+public class LAFFContainerPacker extends AbstractPacker {
 
     private final BasicContainerState containerState;
     private final LAFFPlacement rootPlacement;
@@ -26,6 +26,7 @@ public class LAFFContainerPacker implements Packer {
      *
      */
     public LAFFContainerPacker(final Container container) {
+        super(container);
         this.containerState = new BasicContainerState(container);
         this.rootPlacement = new LAFFPlacement(container);
     }

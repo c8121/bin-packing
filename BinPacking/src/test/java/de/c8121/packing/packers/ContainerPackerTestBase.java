@@ -1,8 +1,10 @@
 package de.c8121.packing.packers;
 
+import de.c8121.packing.Container;
 import de.c8121.packing.Item;
 import de.c8121.packing.PackItemResult;
 import de.c8121.packing.Packer;
+import de.c8121.packing.util.BasicContainer;
 import de.c8121.packing.util.BasicItem;
 
 import java.util.List;
@@ -25,6 +27,19 @@ public abstract class ContainerPackerTestBase extends ThreeJsTestBase {
                 random.nextInt(10, 90),
                 random.nextInt(10, 90),
                 random.nextInt(1, 10)
+        );
+    }
+
+    /**
+     *
+     */
+    public Container createRandomContainer() {
+        var random = ThreadLocalRandom.current();
+        return new BasicContainer(
+                random.nextInt(100, 400),
+                random.nextInt(100, 400),
+                random.nextInt(100, 400),
+                random.nextInt(350, 400)
         );
     }
 

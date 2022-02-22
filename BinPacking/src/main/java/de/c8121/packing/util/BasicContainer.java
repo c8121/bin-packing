@@ -16,6 +16,14 @@ public class BasicContainer extends BasicBox implements Box, Container {
     }
 
     /**
+     * Copy constructor
+     */
+    public BasicContainer(final Container container) {
+        super(container);
+        this.maxLoadWeight = container.maxLoadWeight();
+    }
+
+    /**
      *
      */
     public int maxLoadWeight() {
