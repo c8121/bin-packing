@@ -6,6 +6,11 @@ package de.c8121.packing;
 public interface Container extends Box {
 
     /**
+     *
+     */
+    String name();
+
+    /**
      * The maximum weight this container can load.
      */
     int maxLoadWeight();

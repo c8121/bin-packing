@@ -4,6 +4,7 @@ import de.c8121.packing.Item;
 
 public class BasicItem extends BasicBox implements Item {
 
+    private String name = null;
     private final int weight;
 
     /**
@@ -19,7 +20,23 @@ public class BasicItem extends BasicBox implements Item {
      */
     public BasicItem(final Item item) {
         super(item);
+        this.name = item.name();
         this.weight = item.weight();
+    }
+
+    /**
+     *
+     */
+    @Override
+    public String name() {
+        return this.name;
+    }
+
+    /**
+     *
+     */
+    public void name(final String name) {
+        this.name = name;
     }
 
     /**

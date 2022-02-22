@@ -8,5 +8,10 @@ public interface Item extends Box {
     /**
      *
      */
+    String name();
+
+    /**
+     *
+     */
     int weight();
 }
