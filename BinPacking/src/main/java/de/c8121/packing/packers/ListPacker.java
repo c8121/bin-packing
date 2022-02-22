@@ -16,7 +16,7 @@ public class ListPacker {
     private final Class<? extends AbstractPacker> packerClass;
     private final Set<Container> availableContainers;
 
-    private final Map<Packer, List<Item>> discarded = new LinkedHashMap<>();
+    private final Map<Packer, Map<Packer, List<Item>>> discarded = new HashMap<>();
 
     /**
      *
@@ -29,16 +29,16 @@ public class ListPacker {
     /**
      *
      */
-    public Map<Packer, List<Item>> discarded() {
+    public Map<Packer, Map<Packer, List<Item>>> discarded() {
         return discarded;
     }
 
     /**
      *
      */
-    public Map<Container, List<Item>> pack(final List<Item> items) throws ReflectiveOperationException {
+    public Map<Packer, List<Item>> pack(final List<Item> items) throws ReflectiveOperationException {
 
-        var result = new LinkedHashMap<Container, List<Item>>();
+        var result = new LinkedHashMap<Packer, List<Item>>();
 
         var remainingItems = items;
         while (remainingItems.size() > 0) {
@@ -47,14 +47,14 @@ public class ListPacker {
             if (chunk == null)
                 return null;
 
+            var packer = chunk.getKey();
             var packListResult = chunk.getValue();
             var packedItems = packListResult.get(PackItemResult.Success);
             if (packedItems.size() == 0)
                 return null;
 
-            result.put(chunk.getKey().container(), packedItems);
-            System.out.println("*** Next Container: " + chunk.getKey());
-            System.out.println("\n" + packedItems);
+            result.put(packer, packedItems);
+            System.out.println("*** Next Container: " + packer.container() + " / " + packListResult);
 
             remainingItems = packListResult.getFailed();
         }
@@ -68,43 +68,46 @@ public class ListPacker {
     protected Map.Entry<Packer, PackListResult> packChunk(final List<Item> items) throws ReflectiveOperationException {
 
         var packedLists = this.packToAllContainers(items);
-
-        Map.Entry<Packer, PackListResult> best = null;
-        double bestScore = 0;
-        for (var e : packedLists.entrySet()) {
-
-            var packer = e.getKey();
-            var container = packer.container();
-            var resultList = e.getValue();
-            var score = this.computeScore(container, resultList);
-
-            System.out.println("Container: " + container + ", score=" + score);
-            System.out.println("\t" + resultList);
-
-            if (best == null || score > bestScore) {
-                if (best != null)
-                    this.discarded.remove(best.getKey());
-                best = e;
-                bestScore = score;
-            } else {
-                this.discarded.put(e.getKey(), resultList.get(PackItemResult.Success));
-            }
-        }
-
-        if (best != null) {
-            System.out.println("Best: " + best.getKey().container() + ", score=" + bestScore);
-            System.out.println("\t" + packedLists.get(best.getKey()));
-        }
-
-        return best;
+        return this.selectBest(packedLists);
     }
 
     /**
      *
      */
-    protected double computeScore(final Container container, final PackListResult result) {
-        //TODO: Score lowest remaining space...
-        return result.get(PackItemResult.Success).size();
+    protected Map.Entry<Packer, PackListResult> selectBest(final Map<Packer, PackListResult> packed) {
+
+        if (packed.isEmpty())
+            return null;
+
+        Map.Entry<Packer, PackListResult> best = null;
+        int bestItemCount = 0;
+        double bestFillingLevel = 0;
+
+        var discarded = new LinkedHashMap<Packer, List<Item>>();
+
+        for (var e : packed.entrySet()) {
+
+            var packer = e.getKey();
+            var items = e.getValue();
+            var state = packer.state();
+            var itemCount = state.items().size();
+            var itemFillingLevel = state.fillingLevel();
+
+            if (best == null || bestItemCount < itemCount
+                    || (bestItemCount == itemCount && itemFillingLevel > bestFillingLevel)
+            ) {
+                best = e;
+                bestItemCount = itemCount;
+                bestFillingLevel = itemFillingLevel;
+            }
+
+            discarded.put(packer, items.get(PackItemResult.Success));
+        }
+
+        discarded.remove(best.getKey());
+        this.discarded.put(best.getKey(), discarded);
+
+        return best;
     }
 
     /**

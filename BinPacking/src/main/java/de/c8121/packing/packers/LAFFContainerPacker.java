@@ -19,7 +19,6 @@ import java.util.List;
 public class LAFFContainerPacker extends AbstractPacker {
 
     private final BasicContainerState containerState;
-    private final LAFFPlacement rootPlacement;
 
 
     /**
@@ -27,8 +26,10 @@ public class LAFFContainerPacker extends AbstractPacker {
      */
     public LAFFContainerPacker(final Container container) {
         super(container);
-        this.containerState = new BasicContainerState(container);
-        this.rootPlacement = new LAFFPlacement(container);
+        this.containerState = new BasicContainerState(
+                container,
+                new LAFFPlacement(container)
+        );
     }
 
     /**
@@ -74,7 +75,7 @@ public class LAFFContainerPacker extends AbstractPacker {
 
         //Find placement to add item to
         var placement = this.findPlacement(
-                this.rootPlacement,
+                this.containerState.rootPlacement(),
                 item
         );
         if (placement == null)

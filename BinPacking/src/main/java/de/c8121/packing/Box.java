@@ -56,6 +56,13 @@ public interface Box {
     /**
      *
      */
+    default int volume() {
+        return this.xs() * this.ys() * this.zs();
+    }
+
+    /**
+     *
+     */
     default int xMin() {
         return this.x() - this.xs() / 2;
     }

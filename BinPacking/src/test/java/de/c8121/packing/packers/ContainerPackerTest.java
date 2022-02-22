@@ -38,7 +38,7 @@ public class ContainerPackerTest extends ContainerPackerTestBase {
 
         var randomItems = new ArrayList<Item>();
         for (int i = 0; i < 220; i++)
-            randomItems.add(this.createRandomItem());
+            randomItems.add(this.createRandomItem(1, 10));
 
         this.packList(packer, randomItems);
 

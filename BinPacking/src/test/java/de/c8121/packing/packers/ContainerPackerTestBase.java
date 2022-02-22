@@ -20,26 +20,26 @@ public abstract class ContainerPackerTestBase extends ThreeJsTestBase {
     /**
      *
      */
-    public Item createRandomItem() {
+    public Item createRandomItem(int minWeight, int maxWeight) {
         var random = ThreadLocalRandom.current();
         return new BasicItem(
                 random.nextInt(10, 90),
                 random.nextInt(10, 90),
                 random.nextInt(10, 90),
-                random.nextInt(1, 10)
+                random.nextInt(minWeight, maxWeight + 1)
         );
     }
 
     /**
      *
      */
-    public Container createRandomContainer() {
+    public Container createRandomContainer(int minLoadWeight, int maxLoadWeight) {
         var random = ThreadLocalRandom.current();
         return new BasicContainer(
                 random.nextInt(100, 400),
                 random.nextInt(100, 400),
                 random.nextInt(100, 400),
-                random.nextInt(350, 400)
+                random.nextInt(minLoadWeight, maxLoadWeight + 1)
         );
     }
 

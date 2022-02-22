@@ -38,7 +38,7 @@ class LAFFContainerPackerTest extends ContainerPackerTestBase {
 
         var randomItems = new ArrayList<Item>();
         for (int i = 0; i < 220; i++)
-            randomItems.add(this.createRandomItem());
+            randomItems.add(this.createRandomItem(1, 10));
 
         var container = new BasicContainer(200, 200, 200, 400);
         container.moveBy(0, -200, 300);
@@ -56,7 +56,7 @@ class LAFFContainerPackerTest extends ContainerPackerTestBase {
 
         var randomItems = new ArrayList<Item>();
         for (int i = 0; i < 220; i++)
-            randomItems.add(this.createRandomItem());
+            randomItems.add(this.createRandomItem(1, 10));
 
         this.createContainer(randomItems, 0);
 
