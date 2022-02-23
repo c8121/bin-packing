@@ -54,7 +54,7 @@ public class ListPacker {
                 return null;
 
             result.put(packer, packedItems);
-            System.out.println("*** Next Container: " + packer.container() + " / " + packListResult);
+            //System.out.println("*** Next Container: " + packer.container() + " / " + packListResult);
 
             remainingItems = packListResult.getFailed();
         }
