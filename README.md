@@ -8,6 +8,15 @@ Packing here is done quite fast with a reasonable use of space.
 <img src="Docs/images/container-example.png" alt="Example container" width="200">
 
 
+## Obtain
+
+```
+git clone https://github.com/c8121/bin-packing.git
+./gradlew build
+```
+
+You will then  find the JAR file in `BinPacking/build/libs`
+
 # Usage
 
 ## Packing one single container
