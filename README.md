@@ -40,6 +40,16 @@ var result = listPacker.pack(randomItems);
 ```
 
 
+# Tweaking points
+
+If one likes to adjust the algorithm or likes to create another packing algorithm, i suggest to start at following points
+
+ - Selecting the Placement: `de.c8121.packing.Placement`:
+   When an Item is added, it will be added to a Placement. At first there is one Placement which takes the Item and then creates remainder Placements. When adding the next Item, a appropriate remainder Placement has to be choosen. The selection of the best Placement is a good point to start to adjust the algotithm, see `de.c8121.packing.Placement#findRemainder(Box)`
+   
+ - Creating & removing remainders:
+   As described above, everytime a Item was added, new remainding Placements will be created and previously created remainders might be removed, see `de.c8121.packing.packers.LAFFPacker#setItem(Item)`. These are good points to tweak the algorithm.
+
 
 # Details
 
