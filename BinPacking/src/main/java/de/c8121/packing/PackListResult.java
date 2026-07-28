@@ -7,13 +7,13 @@ public interface PackListResult {
 
     /**
      * Get all items for which {@link Packer#add(Item)} returned given result.
-     * Does not return {@code null} but a empty list if no item was found.
+     * Does not return {@code null} but an empty list if no item was found.
      */
     List<Item> get(final PackItemResult packItemResult);
 
     /**
      * Get all items for which {@link Packer#add(Item)} did not return {@link PackItemResult#Success}.
-     * Does not return {@code null} but a empty list if no item was found.
+     * Does not return {@code null} but an empty list if no item was found.
      */
     default List<Item> getFailed() {
         var result = new ArrayList<Item>();

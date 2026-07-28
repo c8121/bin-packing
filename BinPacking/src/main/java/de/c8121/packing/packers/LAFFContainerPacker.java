@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Default {@link de.c8121.packing.Packer} implementation.
+ * Default {@link Packer} implementation.
  * Based on LAFF-Algorithm, so {@link Item}s should be added in a sorted manner:
  * Items with the largest footprint first.
- * Please use {@link de.c8121.packing.util.ItemListSorter#sortByLargestFootprintAndLowestHeight(List)} for example.
+ * Please use {@link ItemListSorter#sortByLargestFootprintAndLowestHeight(List)} for example.
  * <p>
- * See: http://www.zahidgurbuz.com/yayinlar/An%20Efficient%20Algorithm%20for%203D%20Rectangular%20Box%20Packing.pdf
+ * See: <a href="http://www.zahidgurbuz.com/yayinlar/An%20Efficient%20Algorithm%20for%203D%20Rectangular%20Box%20Packing.pdf">zahidgurbuz.com: Algorithm for Rectangular BoxPacking</a>
  */
 public class LAFFContainerPacker extends AbstractPacker {
 

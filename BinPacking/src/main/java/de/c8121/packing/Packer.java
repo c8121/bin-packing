@@ -14,12 +14,12 @@ public interface Packer {
     Container container();
 
     /**
-     * Try to pack all of given {@link Item}s to {@link Container}.
+     * Try to pack <b>all</b> of given {@link Item}s to {@link Container}.
      */
     PackListResult pack(final List<Item> items);
 
     /**
-     * Try to add given {@link Item} to {@link Container}.
+     * Try to add <b>one</b> {@link Item} to {@link Container}.
      * <p>
      * <b>Note</b>: A Packer implementation might require sorting of items to
      * achieve best results. So using {@link #pack(List)} might be better.

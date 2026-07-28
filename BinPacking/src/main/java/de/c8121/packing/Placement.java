@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * A {@code Placement} can take one {@link Item}.
  * It will offer remaining {@code Placement}s to take further {@code Items}.
- * Best remaining {@code Placement} for next {@code Item} will bee chosen by {@link #findRemainder(Box)}
+ * Best remaining {@code Placement} for next {@code Item} will be chosen by {@link #findRemainder(Box)}
  */
 public interface Placement extends Box {
 

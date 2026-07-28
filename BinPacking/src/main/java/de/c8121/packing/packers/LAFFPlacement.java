@@ -16,7 +16,7 @@ import java.util.Set;
  * Items with the largest footprint first.
  * Please use {@link de.c8121.packing.util.ItemListSorter#sortByLargestFootprintAndLowestHeight(List)} for example.
  * <p>
- * See: http://www.zahidgurbuz.com/yayinlar/An%20Efficient%20Algorithm%20for%203D%20Rectangular%20Box%20Packing.pdf
+ * See: <a href="http://www.zahidgurbuz.com/yayinlar/An%20Efficient%20Algorithm%20for%203D%20Rectangular%20Box%20Packing.pdf">zahidgurbuz.com: Algorithm for Rectangular BoxPacking</a>
  * <p>
  * Offers one remaining Placement filling the whole box
  * if no {@link Item} was set ({@link #setItem(Item)}).
@@ -203,9 +203,7 @@ public class LAFFPlacement extends BasicBox implements Box, Placement {
         ));
 
 
-        if (this.parent != null && this.parent instanceof LAFFPlacement) {
-
-            var parentPlacement = (LAFFPlacement) this.parent;
+        if (this.parent != null && this.parent instanceof LAFFPlacement parentPlacement) {
 
             //Add this to children of parent.
             parentPlacement.children.add(this);

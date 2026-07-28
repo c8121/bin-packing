@@ -33,7 +33,7 @@ public class ThreeJs {
 
 
     /**
-     * Copy all boxes which have been added to far and move them by given values.
+     * Copy all boxes which have been added so far and move them by given values.
      */
     public void copyTo(final int x, final int y, final int z) {
 

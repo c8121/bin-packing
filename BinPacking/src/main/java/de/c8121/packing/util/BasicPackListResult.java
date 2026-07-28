@@ -63,7 +63,7 @@ public class BasicPackListResult implements PackListResult {
         StringBuilder s = new StringBuilder();
 
         for (var e : this.items.entrySet()) {
-            if (s.length() > 0)
+            if (!s.isEmpty())
                 s.append(", ");
 
             s.append(e.getKey())

@@ -41,7 +41,7 @@ public class ListPacker {
         var result = new LinkedHashMap<Packer, List<Item>>();
 
         var remainingItems = items;
-        while (remainingItems.size() > 0) {
+        while (!remainingItems.isEmpty()) {
 
             var chunk = this.packChunk(remainingItems);
             if (chunk == null)
@@ -50,7 +50,7 @@ public class ListPacker {
             var packer = chunk.getKey();
             var packListResult = chunk.getValue();
             var packedItems = packListResult.get(PackItemResult.Success);
-            if (packedItems.size() == 0)
+            if (packedItems.isEmpty())
                 return null;
 
             result.put(packer, packedItems);
