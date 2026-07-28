@@ -24,6 +24,7 @@ public interface Placement extends Box {
 
     /**
      * Get child-placements having an {@link Item}.
+     * Only children having an Item (no empty remainders).
      */
     Set<Placement> children();
 
@@ -48,11 +49,4 @@ public interface Placement extends Box {
      * Checks all remainders of {@code this} (see {@link #remainders()}), not recursive.
      */
     Placement findRemainder(final Box box);
-
-
-    /**
-     * Find {@link Placement} holding given {@link Item}
-     */
-    Placement findPlacement(final Item item);
-
 }

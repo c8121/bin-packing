@@ -286,22 +286,4 @@ public class LAFFPlacement extends BasicBox implements Box, Placement {
         return best;
     }
 
-    /**
-     * Find {@link Placement} holding given {@link Item}.
-     * Lookup will be done recursively starting as {@code this}.
-     */
-    @Override
-    public Placement findPlacement(final Item item) {
-
-        if (this.item == item)
-            return this;
-
-        for (var child : this.children) {
-            var placement = child.findPlacement(item);
-            if (placement != null)
-                return placement;
-        }
-
-        return null;
-    }
 }
