@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Not an automated test. Used from IDE for testing.
- * Creates html-file in temp directory containing a THREE.js scene.
+ * Creates html-file in user-home directory containing a THREE.js scene.
  */
 class ListPackerTest extends ContainerPackerTestBase {
 

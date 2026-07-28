@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  * Not an automated test. Used from IDE for testing.
- * Creates html-file in temp directory containing a THREE.js scene.
+ * Creates html-file in user-home directory containing a THREE.js scene.
  */
 class ThreeJsTest {
 
@@ -31,7 +31,18 @@ class ThreeJsTest {
         vis.add(item);
         vis.setStyle(item, "color: 0x0000ff");
 
-        var file = new File(FileUtils.getTempDirectory(), ThreeJsTest.class.getSimpleName() + ".html");
+        var dir = new File(System.getProperty("user.home"));
+        if (!dir.exists() || !dir.isDirectory()) {
+            System.err.println("User-Home not found (" + System.getProperty("user.home") + "), using temp dir");
+            dir = FileUtils.getTempDirectory();
+        }
+        var file = new File(dir, ThreeJsTest.class.getSimpleName() + ".html");
+        for (int num = 1; num < 10_000 && file.exists(); num++) {
+            file = new File(dir, ThreeJsTest.class.getSimpleName() + "-" + num + ".html");
+        }
+        if (file.exists())
+            throw new IOException("Failed to find uniq file name");
+
         System.out.println("Writing to " + file);
         vis.writeHtml(file);
 

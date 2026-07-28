@@ -36,6 +36,7 @@ import java.util.Set;
  *   </code></pre>
  * <p>
  * B-F, Z) Item was placed ({@link #setItem(Item)})
+ * (Remainder Z is placed above Item)
  * <pre><code>
  *   +--------+-----------------------------+
  *   | Item   |          Remainder B        |
@@ -145,7 +146,7 @@ public class LAFFPlacement extends BasicBox implements Box, Placement {
                 this.z() - this.zs() / 2 + item.zs() / 2
         );
 
-
+        //Reset remainders
         this.remainders.clear();
 
         this.addRemainder(new BasicBox(

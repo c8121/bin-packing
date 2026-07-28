@@ -71,8 +71,22 @@ public abstract class ThreeJsTestBase {
      *
      */
     public void writeHtml() throws IOException {
-        var file = new File(FileUtils.getTempDirectory(), this.getClass().getSimpleName() + ".html");
-        System.out.println("Writing to " + file);
+
+        var baseName = this.getClass().getSimpleName();
+
+        var dir = new File(System.getProperty("user.home"));
+        if (!dir.exists() || !dir.isDirectory()) {
+            System.err.println("User-Home not found (" + System.getProperty("user.home") + "), using temp dir");
+            dir = FileUtils.getTempDirectory();
+        }
+
+        var file = new File(dir, baseName + ".html");
+        for (int num = 1; num < 10_000 && file.exists(); num++) {
+            file = new File(dir, baseName + "-" + num + ".html");
+        }
+        if (file.exists())
+            throw new IOException("Failed to find uniq file name");
+
         this.vis.writeHtml(file);
     }
 }
