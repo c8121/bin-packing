@@ -8,11 +8,11 @@ repositories {
 }
 
 group = 'de.c8121.packing'
-version = '0.0.4-SNAPSHOT'
+version = '0.0.5-SNAPSHOT'
 
 dependencies {
 
-    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation "commons-io:commons-io:2.14.0"
 
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
