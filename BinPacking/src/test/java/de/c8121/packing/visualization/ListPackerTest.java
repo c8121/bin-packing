@@ -1,8 +1,10 @@
-package de.c8121.packing.packers;
+package de.c8121.packing.visualization;
 
 import de.c8121.packing.Container;
 import de.c8121.packing.Item;
 import de.c8121.packing.Packer;
+import de.c8121.packing.packers.LAFFContainerPacker;
+import de.c8121.packing.packers.ListPacker;
 import de.c8121.packing.util.BasicContainer;
 
 import java.io.IOException;

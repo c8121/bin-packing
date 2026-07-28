@@ -1,8 +1,7 @@
-package de.c8121.packing.packers;
+package de.c8121.packing.visualization;
 
 import de.c8121.packing.Placement;
 import de.c8121.packing.util.BasicBox;
-import de.c8121.packing.visualization.ThreeJs;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package de.c8121.packing.packers;
+package de.c8121.packing.visualization;
 
 import de.c8121.packing.Container;
 import de.c8121.packing.Item;

@@ -1,6 +1,7 @@
-package de.c8121.packing.packers;
+package de.c8121.packing.visualization;
 
 import de.c8121.packing.Item;
+import de.c8121.packing.packers.LAFFContainerPacker;
 import de.c8121.packing.util.BasicContainer;
 import de.c8121.packing.util.BasicItem;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Not an automated test. Used from IDE for testing.
- * Creates html-file in temp directory containing a THREE.js scene.
+ * Creates html-file in user-home directory containing a THREE.js scene.
  */
 public class ContainerPackerTest extends ContainerPackerTestBase {
 
