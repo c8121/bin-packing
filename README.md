@@ -41,11 +41,11 @@ containers.add(new BasicContainer(200, 200, 200, 400));
 //...add more containers...
 
 var items = new ArrayList<Item>();
-items.add(new BasicItem(30, 60, 40, 10))
+items.add(new BasicItem(30, 60, 40, 10));
 //...add more items...
 
 var listPacker = new ListPacker(LAFFContainerPacker.class, containers);
-var result = listPacker.pack(randomItems);
+var result = listPacker.pack(items);
 ```
 
 
